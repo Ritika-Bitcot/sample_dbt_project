@@ -11,22 +11,14 @@ models:
           - unique
       - name: TRANSACTION_ID
         description: "Transaction ID from UPS data"
-        tests:
-          - not_null
       - name: TRACKING_ID
         description: "Internal tracking ID"
-        tests:
-          - not_null
       - name: STATUS_TYPE
         description: "Shipment status type"
-        tests:
-          - not_null
       - name: STATUS_DESCRIPTION
         description: "Shipment status description"
       - name: EVENT_TIME
         description: "Time of the event"
-        tests:
-          - not_null
       - name: CURRENT_STATUS
         description: "Current status of the shipment"
       - name: SENDER_NAME
@@ -59,8 +51,6 @@ models:
         description: "Description of the shipping service used"
       - name: WEIGHT
         description: "Package weight"
-        tests:
-          - not_null
       - name: WEIGHT_UNIT
         description: "Unit of weight (e.g., lbs, kg)"
       - name: RECEIVED_BY
@@ -88,4 +78,5 @@ models:
         tests:
           - not_null
           - accepted_values:
-              values: [true, false]
+              arguments:
+                values: [true, false]

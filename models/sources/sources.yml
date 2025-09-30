@@ -6,3 +6,27 @@ sources:
     schema: raw_layer
     tables:
       - name: UPS
+        description: "Raw UPS tracking data from Fivetran loaded into raw_layer"
+        columns:
+          - name: _LINE
+            description: "Fivetran line number"
+          - name: _FIVETRAN_SYNCED
+            description: "Fivetran sync timestamp"
+          - name: TRACKING_ID
+            description: "Internal tracking ID"
+          - name: CREATE_DATE
+            description: "Record creation date"
+          - name: DATA
+            description: "JSON data containing UPS tracking information"
+          - name: DATA_LOAD_TIME
+            description: "Data load timestamp"
+          - name: DATA_UPDATE_TIME
+            description: "Data update timestamp"
+          - name: IS_ACTIVE
+            description: "Whether this is the latest record for the tracking number"
+          - name: TRANSACTION_ID
+            description: "Transaction ID"
+          - name: ULTIMATE_TRANSACTION_ID
+            description: "Ultimate transaction ID"
+          - name: TRACKINGNUMBER
+            description: "UPS tracking number"
