@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: sample_database
+    database: sample_database
+    schema: raw_layer
+    tables:
+      - name: UPS
