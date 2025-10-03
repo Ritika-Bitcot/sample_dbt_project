@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: ups_dwh
+    description: "Warehouse layer: only latest active UPS shipment records"
+    columns:
+      - name: CARRIER_TRACKING_NUMBER
+        description: "Unique UPS tracking number"
+        tests:
+          - not_null
+      - name: EVENT_TIME
+        description: "Timestamp of latest event"
+        tests:
+          - not_null
+      - name: IS_ACTIVE
+        description: "Always true since filtered"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true]
