@@ -2,13 +2,12 @@ version: 2
 
 models:
   - name: ups_base
-    description: "Cleaned and deduplicated UPS shipment data from raw_layer, base layer of medallion architecture"
+    description: "Cleaned UPS shipment data with one row per activity event, base layer of medallion architecture"
     columns:
       - name: CARRIER_TRACKING_NUMBER
-        description: "Unique tracking number from UPS"
+        description: "UPS tracking number (multiple rows per tracking number for different activities)"
         tests:
           - not_null
-          - unique
       - name: TRANSACTION_ID
         description: "Transaction ID from UPS data"
       - name: TRACKING_ID
@@ -80,3 +79,7 @@ models:
           - accepted_values:
               arguments:
                 values: [true, false]
+      - name: EVENT_TIME
+        description: "Time of the event"
+        tests:
+          - not_null
