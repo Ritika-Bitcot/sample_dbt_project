@@ -16,8 +16,6 @@ models:
         description: "Shipment status type"
       - name: STATUS_DESCRIPTION
         description: "Shipment status description"
-      - name: EVENT_TIME
-        description: "Time of the event"
       - name: CURRENT_STATUS
         description: "Current status of the shipment"
       - name: SENDER_NAME
