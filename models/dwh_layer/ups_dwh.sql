@@ -1,5 +1,7 @@
 {{ config(
-    materialized='table',
+    materialized='incremental',
+    unique_key='CARRIER_TRACKING_NUMBER',
+    on_schema_change='fail',
     schema='dwh_layer'
 ) }}
 
@@ -7,6 +9,9 @@ with base as (
     select *
     from {{ ref('ups_base') }}
     where IS_ACTIVE = true
+    {% if is_incremental() %}
+        and EVENT_TIME > (select max(EVENT_TIME) from {{ this }})
+    {% endif %}
 )
 
 select
@@ -40,7 +45,7 @@ select
     LOCATION,
     CREATE_DATE,
     DELIVERY_TIME,
-    RECORD_LOAD_DATE,
+    current_timestamp() as RECORD_LOAD_DATE,
     IS_ACTIVE
 from base
 order by CARRIER_TRACKING_NUMBER, EVENT_TIME desc

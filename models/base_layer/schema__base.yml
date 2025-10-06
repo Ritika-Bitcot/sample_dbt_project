@@ -3,6 +3,10 @@ version: 2
 models:
   - name: ups_base
     description: "Cleaned UPS shipment data with one row per activity event, base layer of medallion architecture"
+    config:
+      materialized: incremental
+      unique_key: ['CARRIER_TRACKING_NUMBER', 'EVENT_TIME', 'STATUS_TYPE']
+      on_schema_change: fail
     columns:
       - name: CARRIER_TRACKING_NUMBER
         description: "UPS tracking number (multiple rows per tracking number for different activities)"

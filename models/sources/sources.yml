@@ -8,10 +8,6 @@ sources:
       - name: UPS
         description: "Raw UPS tracking data from Fivetran loaded into raw_layer"
         columns:
-          - name: _LINE
-            description: "Fivetran line number"
-          - name: _FIVETRAN_SYNCED
-            description: "Fivetran sync timestamp"
           - name: TRACKING_ID
             description: "Internal tracking ID"
           - name: CREATE_DATE

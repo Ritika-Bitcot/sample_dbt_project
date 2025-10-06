@@ -3,6 +3,10 @@ version: 2
 models:
   - name: ups_dwh
     description: "Warehouse layer: only latest active UPS shipment records"
+    config:
+      materialized: incremental
+      unique_key: CARRIER_TRACKING_NUMBER
+      on_schema_change: fail
     columns:
       - name: CARRIER_TRACKING_NUMBER
         description: "Unique UPS tracking number"
@@ -10,6 +14,16 @@ models:
           - not_null
       - name: EVENT_TIME
         description: "Timestamp of latest event"
+        tests:
+          - not_null
+      - name: LOCATION
+        description: "Location of the event"
+      - name: CREATE_DATE
+        description: "Record creation date from source system"
+      - name: DELIVERY_TIME
+        description: "Delivery completion timestamp"
+      - name: RECORD_LOAD_DATE
+        description: "Timestamp when record was loaded into DWH layer"
         tests:
           - not_null
       - name: IS_ACTIVE
