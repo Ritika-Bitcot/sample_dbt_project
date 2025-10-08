@@ -1,8 +1,9 @@
 {{ config(
     materialized='incremental',
     unique_key='CARRIER_TRACKING_NUMBER',
-    on_schema_change='fail',
-    schema='dwh_layer'
+    on_schema_change='sync_all_columns',
+    schema='dwh_layer',
+    incremental_strategy='delete+insert'
 ) }}
 
 with base as (
@@ -29,6 +30,7 @@ select
     SENDER_STATE,
     SENDER_ZIP,
     SENDER_COUNTRY,
+    RECIPIENT_NAME,
     RECIPIENT_SHIP_ADDRESS1,
     RECIPIENT_SHIP_ADDRESS2,
     RECIPIENT_SHIP_CITY,

@@ -36,6 +36,8 @@ models:
         description: "Sender's postal code"
       - name: SENDER_COUNTRY
         description: "Sender's country code"
+      - name: RECIPIENT_NAME
+        description: "Recipient's name"
       - name: RECIPIENT_SHIP_ADDRESS1
         description: "Recipient address line 1"
       - name: RECIPIENT_SHIP_ADDRESS2
