@@ -1,0 +1,89 @@
+version: 2
+
+models:
+  - name: ups_base
+    description: "Cleaned UPS shipment data with one row per activity event, base layer of medallion architecture"
+    config:
+      materialized: incremental
+      unique_key: ['CARRIER_TRACKING_NUMBER', 'EVENT_TIME', 'STATUS_TYPE']
+      on_schema_change: fail
+    columns:
+      - name: CARRIER_TRACKING_NUMBER
+        description: "UPS tracking number (multiple rows per tracking number for different activities)"
+        tests:
+          - not_null
+      - name: TRANSACTION_ID
+        description: "Transaction ID from UPS data"
+      - name: TRACKING_ID
+        description: "Internal tracking ID"
+      - name: STATUS_TYPE
+        description: "Shipment status type"
+      - name: STATUS_DESCRIPTION
+        description: "Shipment status description"
+      - name: CURRENT_STATUS
+        description: "Current status of the shipment"
+      - name: SENDER_NAME
+        description: "Sender's name"
+      - name: SENDER_ADDRESS1
+        description: "Sender's address line 1"
+      - name: SENDER_ADDRESS2
+        description: "Sender's address line 2 (optional)"
+      - name: SENDER_CITY
+        description: "Sender's city"
+      - name: SENDER_STATE
+        description: "Sender's state or province"
+      - name: SENDER_ZIP
+        description: "Sender's postal code"
+      - name: SENDER_COUNTRY
+        description: "Sender's country code"
+      - name: RECIPIENT_NAME
+        description: "Recipient's name"
+      - name: RECIPIENT_SHIP_ADDRESS1
+        description: "Recipient address line 1"
+      - name: RECIPIENT_SHIP_ADDRESS2
+        description: "Recipient address line 2 (optional)"
+      - name: RECIPIENT_SHIP_CITY
+        description: "Recipient city"
+      - name: RECIPIENT_SHIP_STATE
+        description: "Recipient state or province"
+      - name: RECIPIENT_SHIP_ZIP
+        description: "Recipient postal code"
+      - name: RECIPIENT_SHIP_COUNTRY_CODE
+        description: "Recipient country code"
+      - name: SERVICE_DESCRIPTION
+        description: "Description of the shipping service used"
+      - name: WEIGHT
+        description: "Package weight"
+      - name: WEIGHT_UNIT
+        description: "Unit of weight (e.g., lbs, kg)"
+      - name: RECEIVED_BY
+        description: "Person who received the package"
+      - name: ORDER_QUANTITY
+        description: "Quantity of orders (default 1)"
+        tests:
+          - not_null
+      - name: FACILITY_ID
+        description: "Facility or reference ID from shipment"
+      - name: SHIP_DATE
+        description: "Shipment pickup date"
+      - name: LOCATION
+        description: "Location of the event"
+      - name: CREATE_DATE
+        description: "Record creation date from source system"
+      - name: DELIVERY_TIME
+        description: "Delivery completion timestamp"
+      - name: RECORD_LOAD_DATE
+        description: "Timestamp when record was loaded into base layer"
+        tests:
+          - not_null
+      - name: IS_ACTIVE
+        description: "Indicates if the record is the latest for this tracking number"
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [true, false]
+      - name: EVENT_TIME
+        description: "Time of the event"
+        tests:
+          - not_null
